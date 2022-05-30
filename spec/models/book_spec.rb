@@ -5,6 +5,18 @@ RSpec.describe Book, type: :model do
     it { should belong_to(:author).class_name('Author') }
   end
 
+  describe 'factory-bot' do
+    let!(:factory_book) { FactoryBot.create(:book) }
+
+    it 'should create a valid book' do
+      expect(factory_book.title).to eq("The factory book title")
+      expect(factory_book.genre).to eq("The factory book genre")
+      expect(factory_book.num_pages).to eq(100)
+      expect(factory_book.author.name).to eq("J.R.R Tolkien")
+      expect(factory_book.author.age).to eq(55)
+    end
+  end
+
   describe 'validations' do
     let(:author) { Author.new(name: "John Doe") }
     subject { described_class.new(title: "Title", genre: "Genre", num_pages: 10, author: author) }
